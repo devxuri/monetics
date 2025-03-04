@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, Button } from '@mui/material';
 import CsvUploader from './CsvUploader';
+import AppTheme from '../../shared-theme/AppTheme';
 
 export default function UploadCard() {
     const [transactions, setTransactions] = useState([]);
@@ -11,11 +12,15 @@ export default function UploadCard() {
     };
 
     return (
-        <Card>
-            <CardContent>
-                <Typography variant="h6">Upload Bank Statement</Typography>
-                <CsvUploader onUploadSuccess={handleUploadSuccess} />
-            </CardContent>
-        </Card>
+        <AppTheme>
+            <Card>
+                <CardContent>
+                    <Typography variant="h5" component="div">
+                        Upload File
+                    </Typography>
+                    <CsvUploader onUploadSuccess={handleUploadSuccess} />
+                </CardContent>
+            </Card>
+        </AppTheme>
     );
 }

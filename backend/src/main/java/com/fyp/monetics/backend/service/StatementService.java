@@ -1,6 +1,5 @@
 package com.fyp.monetics.backend.service;
 import com.fyp.monetics.backend.exception.InvalidFileException;
-import com.fyp.monetics.backend.model.CategorizedTransaction;
 import com.fyp.monetics.backend.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +17,9 @@ public class StatementService {
     @Autowired
     private CategorizationService categorizationService;
 
-    public List<CategorizedTransaction> processStatement(MultipartFile file) throws IOException, InvalidFileException {
-        // Step 1: Parse CSV
-        List<Transaction> transactions = csvParserService.parseCsv(file);
+    public List<Transaction> processStatement(MultipartFile file) throws IOException, InvalidFileException {
 
-        // Step 2: Categorize transactions
+        List<Transaction> transactions = csvParserService.parseCsv(file);
         return categorizationService.categorizeTransactions(transactions);
     }
 }

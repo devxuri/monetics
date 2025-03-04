@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,29 +17,51 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-// CsvParserService.java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class CsvParserService {
-
+    private static final Logger logger = LoggerFactory.getLogger(CsvParserService.class);
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public List<Transaction> parseCsv(MultipartFile file) throws IOException, InvalidFileException {
+        logger.info("Parsing CSV file: {}", file.getOriginalFilename());
+
         List<Transaction> transactions = new ArrayList<>();
 
         try (Reader reader = new InputStreamReader(file.getInputStream());
              CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
 
             for (CSVRecord record : csvParser) {
+                logger.debug("Processing record: {}", record);
                 Transaction transaction = new Transaction();
-                transaction.setDate(LocalDate.parse(record.get("Date"))); // Throws DateTimeParseException
-                transaction.setDescription(record.get("Description"));
-                transaction.setAmount(Double.parseDouble(record.get("Amount"))); // Throws NumberFormatException
+
+                if (record.isSet("Date") && !record.get("Date").isEmpty()) {
+                    try {
+                        transaction.setDate(LocalDate.parse(record.get("Date"), DATE_FORMATTER));
+                    } catch (DateTimeParseException e) {
+                        logger.error("Invalid date format in record: {}", record.get("Date"), e);
+                        throw new InvalidFileException("Invalid date format: " + record.get("Date"), e);
+                    }
+                } else {
+                    transaction.setDate(null);
+                }
+
+                transaction.setCounterParty(record.isSet("Counter Party") ? record.get("Counter Party") : "");
+                transaction.setReference(record.isSet("Reference") ? record.get("Reference") : "");
+                transaction.setType(record.isSet("Type") ? record.get("Type") : "");
+                transaction.setAmount(record.isSet("Amount (GBP)") ? Double.parseDouble(record.get("Amount (GBP)")) : 0.0);
+                transaction.setBalance(record.isSet("Balance (GBP)") ? Double.parseDouble(record.get("Balance (GBP)")) : 0.0);
+                transaction.setNotes(record.isSet("Notes") ? record.get("Notes") : "");
+                transaction.setSpendingCategory("");
                 transactions.add(transaction);
             }
-        } catch (DateTimeParseException | NumberFormatException e) {
+        } catch (Exception e) {
+            logger.error("Error parsing CSV file: {}", e.getMessage(), e);
             throw new InvalidFileException("Invalid CSV file format: " + e.getMessage(), e);
-        } catch (IOException e) {
-            throw new InvalidFileException("Failed to read the file: " + e.getMessage(), e);
         }
 
+        logger.info("Successfully parsed {} transactions", transactions.size());
         return transactions;
     }
 }

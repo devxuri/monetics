@@ -1,5 +1,5 @@
 package com.fyp.monetics.backend.service;
-import com.fyp.monetics.backend.model.CategorizedTransaction;
+
 import com.fyp.monetics.backend.model.Transaction;
 import org.springframework.stereotype.Service;
 
@@ -11,27 +11,43 @@ import java.util.stream.Collectors;
 public class CategorizationService {
 
     private static final Map<String, List<String>> CATEGORY_RULES = Map.of(
-            "Groceries", List.of("supermarket", "grocery", "mart"),
-            "Entertainment", List.of("cine", "netflix", "spotify"),
-            "Utilities", List.of("electric", "water", "gas")
+            "Groceries", List.of("tesco", "fresh", "supermarket", "morrisons"),
+            "Entertainment", List.of("cine", "netflix", "spotify", "ice skating"),
+            "Transport", List.of("tfl", "travel", "train"),
+            "Restaurants", List.of("pizza", "domino", "udon", "pret", "subway", "rice and curry")
     );
 
-    public List<CategorizedTransaction> categorizeTransactions(List<Transaction> transactions) {
+    public List<Transaction> categorizeTransactions(List<Transaction> transactions) {
         return transactions.stream()
                 .map(transaction -> {
-                    CategorizedTransaction categorized = new CategorizedTransaction(transaction);
-                    categorized.setCategory(determineCategory(transaction.getDescription()));
-                    return categorized;
+                    String category = determineCategory(transaction.getType(), transaction.getCounterParty(), transaction.getReference());
+                    transaction.setSpendingCategory(category);
+                    System.out.println("Transaction: "
+                            + transaction.getCounterParty() + " -> Category: " + category);
+
+                    return transaction;
                 })
                 .collect(Collectors.toList());
     }
 
-    private String determineCategory(String description) {
-        return CATEGORY_RULES.entrySet().stream()
+    private String determineCategory(String type, String counterParty, String reference) {
+        // RULE 1: Check type priority
+        if ("CARD SUBSCRIPTION".equalsIgnoreCase(type)) {
+            return "Subscription";
+        } else if ("FASTER PAYMENT".equalsIgnoreCase(type)) {
+            return "Payments";
+        }
+
+        // RULE 2: Match counterParty & reference against category rules
+        String combinedText = (counterParty + " " + reference).toLowerCase();
+        String matchedCategory = CATEGORY_RULES.entrySet().stream()
                 .filter(entry -> entry.getValue().stream()
-                        .anyMatch(keyword -> description.toLowerCase().contains(keyword)))
+                        .anyMatch(keyword -> combinedText.contains(keyword)))
                 .map(Map.Entry::getKey)
                 .findFirst()
-                .orElse("Uncategorized");
+                .orElse(null);
+
+        // RULE 3: Default uncat if none matches
+        return matchedCategory != null ? matchedCategory : "Uncategorized";
     }
 }

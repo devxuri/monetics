@@ -4,44 +4,81 @@ import java.time.LocalDate;
 
 public class Transaction {
     private LocalDate date;
-    private String description;
+    private String counterParty;
+    private String reference;
+    private String type;
     private double amount;
-    private String category; // Will be populated by categorization service
+    private double balance;
+    private String notes;
+    private String spendingCategory;
 
-    // Getters, setters, and constructor
-    public Transaction(LocalDate date, String description, double amount) {
+    public Transaction(LocalDate date, String counterParty, String reference, String type,
+                       double amount, double balance, String notes) {
         this.date = date;
-        this.description = description;
+        this.counterParty = counterParty;
+        this.reference = reference;
+        this.type = type;
         this.amount = amount;
+        this.balance = balance;
+        this.notes = notes;
+        this.spendingCategory = "";
     }
+
     public Transaction() {}
-    
+
     public LocalDate getDate() {
         return date;
     }
     public void setDate(LocalDate date) {
         this.date = date;
     }
-    public String getDescription() {
-        return description;
+
+    public String getCounterParty() {
+        return counterParty;
     }
-    
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCounterParty(String counterParty) {
+        this.counterParty = counterParty;
     }
+
+    public String getReference() {
+        return reference;
+    }
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public double getAmount() {
         return amount;
     }
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    
-    public String getCategory() {
-        return category;
+
+    public double getBalance() {
+        return balance;
     }
-    public void setCategory(String category) {
-        this.category = category;
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getSpendingCategory() {
+        return spendingCategory;
+    }
+    public void setSpendingCategory(String spendingCategory) {
+        this.spendingCategory = spendingCategory;
     }
 }
-
-

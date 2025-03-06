@@ -5,6 +5,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import TransactionsDataGrid from './TransactionsDataGrid';
 import CategoriesView from './CategoriesView';
+import { Button } from '@mui/material';
+import Papa from 'papaparse';
+import { saveAs } from 'file-saver';
 
 const data = [
     {
@@ -40,11 +43,39 @@ const data = [
 ];
 
 export default function TransactionsGrid() {
+    const uploadedStatements = JSON.parse(sessionStorage.getItem('uploadedStatements')) || [];
+
+    const handleExport = () => {
+        if (uploadedStatements.length === 0) {
+            return;
+        }
+        const csv = Papa.unparse(uploadedStatements, {
+            header: true,
+        });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        saveAs(blob, 'monetics-statements.csv');
+    };
+
     return (
         <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
-            <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-                Transactions
-            </Typography>
+
+            <Grid container spacing={2} columns={12}>
+                <Grid size={{ xs: 12, lg: 11 }}>
+                    <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
+                        Transactions
+                    </Typography>
+
+                </Grid>
+                <Grid size={{ xs: 12, lg: 1 }}>
+                    <Button
+                        variant="contained"
+                        onClick={handleExport}
+                        sx={{ mb: 2 }}
+                    >
+                        Export CSV
+                    </Button>
+                </Grid>
+            </Grid>
 
             <Grid container spacing={2} columns={12}>
                 <Grid size={{ xs: 12, lg: 9 }}>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Select } from '@mui/material';
-import { columns, rows } from '../../../utils/gridData';
+import { Box, Select, Button, Stack } from '@mui/material';
+
 
 function generateColumnsAndRows(uploadedStatements) {
   if (!uploadedStatements || uploadedStatements.length === 0) {
@@ -82,47 +82,49 @@ export default function TransactionsDataGrid() {
   };
 
   return (
-    <DataGrid
-      rows={localRows}
-      columns={columns}
-      getRowClassName={(params) =>
-        params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
-      }
-      initialState={{
-        pagination: { paginationModel: { pageSize: 20 } },
-      }}
-      pageSizeOptions={[10, 20, 50]}
-      disableColumnResize
-      density="compact"
-      processRowUpdate={handleProcessRowUpdate}
-      onProcessRowUpdateError={(error) => console.error(error)}
-      editMode="row"
-      slotProps={{
-        filterPanel: {
-          filterFormProps: {
-            logicOperatorInputProps: {
-              variant: 'outlined',
-              size: 'small',
-            },
-            columnInputProps: {
-              variant: 'outlined',
-              size: 'small',
-              sx: { mt: 'auto' },
-            },
-            operatorInputProps: {
-              variant: 'outlined',
-              size: 'small',
-              sx: { mt: 'auto' },
-            },
-            valueInputProps: {
-              InputComponentProps: {
+    <Box>
+      <DataGrid
+        rows={localRows}
+        columns={columns}
+        getRowClassName={(params) =>
+          params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+        }
+        initialState={{
+          pagination: { paginationModel: { pageSize: 20 } },
+        }}
+        pageSizeOptions={[10, 20, 50]}
+        disableColumnResize
+        density="compact"
+        processRowUpdate={handleProcessRowUpdate}
+        onProcessRowUpdateError={(error) => console.error(error)}
+        editMode="row"
+        slotProps={{
+          filterPanel: {
+            filterFormProps: {
+              logicOperatorInputProps: {
                 variant: 'outlined',
                 size: 'small',
               },
+              columnInputProps: {
+                variant: 'outlined',
+                size: 'small',
+                sx: { mt: 'auto' },
+              },
+              operatorInputProps: {
+                variant: 'outlined',
+                size: 'small',
+                sx: { mt: 'auto' },
+              },
+              valueInputProps: {
+                InputComponentProps: {
+                  variant: 'outlined',
+                  size: 'small',
+                },
+              },
             },
           },
-        },
-      }}
-    />
+        }}
+      />
+    </Box>
   );
 }

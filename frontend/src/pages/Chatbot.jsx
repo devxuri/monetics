@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Box } from '@mui/material';
-import UploadCard from '../components/features/Upload/UploadCard';
 import CsvUploader from '../components/features/Upload/CsvUploader';
 
 
@@ -9,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
 import AppNavbar from '../components/common/AppNavbar';
 import Header from '../components/common/Header';
-import MainGrid from '../components/features/Analytics/AnalyticsGrid';
 import SideMenu from '../components/common/SideMenu';
 import AppTheme from '../components/shared-theme/AppTheme';
 
@@ -27,7 +25,7 @@ const xThemeComponents = {
     ...treeViewCustomizations,
 };
 
-export default function UploadPage(props) {
+export default function ChatbotPage(props) {
     const handleUploadSuccess = (data) => {
         window.location.href = '/analytics';
     };
@@ -59,16 +57,7 @@ export default function UploadPage(props) {
                         }}
                     >
                         <Header />
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                height: '100vh',
-                            }}
-                        >
-                            <CsvUploader onUploadSuccess={handleUploadSuccess} />
-                        </Box>
+
                     </Stack>
                 </Box>
             </Box>

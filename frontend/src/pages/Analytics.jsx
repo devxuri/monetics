@@ -1,18 +1,14 @@
 import * as React from 'react';
-import { Box } from '@mui/material';
-import UploadCard from '../components/features/Upload/UploadCard';
-import CsvUploader from '../components/features/Upload/CsvUploader';
-
-
+import { useEffect } from 'react';
 import { alpha } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import AppNavbar from '../components/common/AppNavbar';
 import Header from '../components/common/Header';
-import MainGrid from '../components/features/Analytics/AnalyticsGrid';
+import AnalyticsGrid from '../components/features/Analytics/AnalyticsGrid';
 import SideMenu from '../components/common/SideMenu';
 import AppTheme from '../components/shared-theme/AppTheme';
-
 import {
     chartsCustomizations,
     dataGridCustomizations,
@@ -27,13 +23,14 @@ const xThemeComponents = {
     ...treeViewCustomizations,
 };
 
-export default function UploadPage(props) {
-    const handleUploadSuccess = (data) => {
-        window.location.href = '/analytics';
-    };
-
+export default function DashboardPage(props) {
+    useEffect(() => {
+        const uploadedStatements = sessionStorage.getItem('uploadedStatements');
+        if (uploadedStatements) {
+            console.log('Uploaded Statements:', JSON.parse(uploadedStatements));
+        }
+    }, []);
     return (
-
         <AppTheme {...props} themeComponents={xThemeComponents}>
             <CssBaseline enableColorScheme />
             <Box sx={{ display: 'flex' }}>
@@ -59,16 +56,7 @@ export default function UploadPage(props) {
                         }}
                     >
                         <Header />
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                height: '100vh',
-                            }}
-                        >
-                            <CsvUploader onUploadSuccess={handleUploadSuccess} />
-                        </Box>
+                        <AnalyticsGrid />
                     </Stack>
                 </Box>
             </Box>

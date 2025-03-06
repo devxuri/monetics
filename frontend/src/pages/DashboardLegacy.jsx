@@ -4,17 +4,17 @@ import { alpha } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import AppNavbar from '../components/dashboard/components/AppNavbar';
-import Header from '../components/dashboard/components/Header';
-import MainGrid from '../components/dashboard/components/MainGrid';
-import SideMenu from '../components/dashboard/components/SideMenu';
+import AppNavbar from '../components/dashboard-legacy/components/AppNavbar';
+import Header from '../components/dashboard-legacy/components/Header';
+import MainGrid from '../components/dashboard-legacy/components/MainGrid';
+import SideMenu from '../components/dashboard-legacy/components/SideMenu';
 import AppTheme from '../components/shared-theme/AppTheme';
 import {
   chartsCustomizations,
   dataGridCustomizations,
   datePickersCustomizations,
   treeViewCustomizations,
-} from '../components/dashboard/theme/customizations';
+} from '../components/dashboard-legacy/theme/customizations';
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -23,14 +23,13 @@ const xThemeComponents = {
   ...treeViewCustomizations,
 };
 
-export default function DashboardPage(props) {
+export default function DashboardLegacyPage(props) {
   return (
     <AppTheme {...props} themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
       <Box sx={{ display: 'flex' }}>
         <SideMenu />
         <AppNavbar />
-        {/* Main content */}
         <Box
           component="main"
           sx={(theme) => ({

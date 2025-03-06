@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Button, CircularProgress, Typography } from '@mui/material';
-import { uploadStatement } from '../../../services/api';
+import { Button, CircularProgress, Typography, Box } from '@mui/material';
 import Papa from 'papaparse';
 import axios from 'axios';
 import AppTheme from '../../shared-theme/AppTheme';
-import App from '../../../App';
 
 export default function CsvUploader({ onUploadSuccess }) {
     const [file, setFile] = useState(null);
@@ -22,17 +20,22 @@ export default function CsvUploader({ onUploadSuccess }) {
                 },
                 header: true,
             });
+
+            handleUpload(selectedFile);
         }
     };
 
-    const handleUpload = async () => {
-        if (!file) {
+    const handleUpload = async (fileToUpload) => {
+        if (!fileToUpload) {
             setError('Please select a file');
             return;
         }
 
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', fileToUpload);
+
+        setIsLoading(true);
+        setError('');
 
         try {
             const response = await axios.post('http://localhost:8080/api/statements/upload', formData, {
@@ -41,16 +44,31 @@ export default function CsvUploader({ onUploadSuccess }) {
                 },
             });
             onUploadSuccess(response.data);
+            sessionStorage.setItem('uploadedStatements', JSON.stringify(response.data));
         } catch (err) {
             console.error('Upload error:', err);
             console.error('Error response:', err.response);
             setError(err.response?.data || err.message || 'Failed to upload file. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <AppTheme>
-            <div>
+            <Box
+                sx={{
+                    border: '2px dashed grey',
+                    padding: '20px',
+                    textAlign: 'center',
+                    width: '300px',
+                    height: '200px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
                 <input
                     type="file"
                     accept=".csv"
@@ -65,17 +83,9 @@ export default function CsvUploader({ onUploadSuccess }) {
                     </Button>
                 </label>
                 {file && <Typography>{file.name}</Typography>}
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleUpload}
-                    disabled={!file || isLoading}
-                    startIcon={isLoading && <CircularProgress size={20} />}
-                >
-                    Upload
-                </Button>
+                {isLoading && <CircularProgress size={20} />}
                 {error && <Typography color="error">{error}</Typography>}
-            </div>
+            </Box>
         </AppTheme>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, CircularProgress, Typography, Box } from '@mui/material';
 import Papa from 'papaparse';
-import axios from 'axios';
+import { uploadStatement } from '../../../services/api';
 import AppTheme from '../../shared-theme/AppTheme';
 
 export default function CsvUploader({ onUploadSuccess }) {
@@ -38,17 +38,11 @@ export default function CsvUploader({ onUploadSuccess }) {
         setError('');
 
         try {
-            const response = await axios.post('http://localhost:8080/api/statements/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            onUploadSuccess(response.data);
-            sessionStorage.setItem('uploadedStatements', JSON.stringify(response.data));
+            const data = await uploadStatement(formData);
+            onUploadSuccess(data);
+            sessionStorage.setItem('uploadedStatements', JSON.stringify(data));
         } catch (err) {
-            console.error('Upload error:', err);
-            console.error('Error response:', err.response);
-            setError(err.response?.data || err.message || 'Failed to upload file. Please try again.');
+            setError(err.message);
         } finally {
             setIsLoading(false);
         }

@@ -3,12 +3,12 @@ import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import ChartUserByCountry from '../Analytics/ChartUserByCountry';
+import ChartUserByCountry from '../Analytics/CategorySpendingPieChart';
 import CustomizedTreeView from './CustomizedTreeView';
 import CustomizedDataGrid from './CustomizedDataGrid';
 import HighlightedCard from '../Analytics/HighlightedCard';
-import PageViewsBarChart from '../Analytics/PageViewsBarChart';
-import SessionsChart from '../Analytics/SessionsChart';
+import PageViewsBarChart from '../Analytics/WeeklySpendingBarChart';
+import SessionsChart from '../Analytics/IncomeExpenseLineChart';
 import StatCard from '../Analytics/StatCard';
 import { Divider } from '@mui/material';
 

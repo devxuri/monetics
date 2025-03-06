@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import AppNavbar from '../components/common/AppNavbar';
 import Header from '../components/common/Header';
 import AnalyticsGrid from '../components/features/Analytics/AnalyticsGrid';
 import SideMenu from '../components/common/SideMenu';
 import AppTheme from '../components/shared-theme/AppTheme';
+import { calculateAnalytics } from '../services/api';
 import {
     chartsCustomizations,
     dataGridCustomizations,
@@ -24,12 +25,35 @@ const xThemeComponents = {
 };
 
 export default function DashboardPage(props) {
+    const [analyticsData, setAnalyticsData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        const uploadedStatements = sessionStorage.getItem('uploadedStatements');
-        if (uploadedStatements) {
-            console.log('Uploaded Statements:', JSON.parse(uploadedStatements));
-        }
+        const transactions = JSON.parse(sessionStorage.getItem('uploadedStatements')) || [];
+        console.log('Transactions:', transactions);
+
+        const fetchAnalytics = async () => {
+            try {
+                const data = await calculateAnalytics(transactions);
+                setAnalyticsData(data);
+            } catch (error) {
+                console.error('Error fetching analytics:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAnalytics();
     }, []);
+
+    if (loading) {
+        return <CircularProgress />;
+    }
+
+    if (analyticsData) {
+        console.log(analyticsData);
+    }
+
     return (
         <AppTheme {...props} themeComponents={xThemeComponents}>
             <CssBaseline enableColorScheme />
@@ -56,7 +80,7 @@ export default function DashboardPage(props) {
                         }}
                     >
                         <Header />
-                        <AnalyticsGrid />
+                        <AnalyticsGrid analyticsData={analyticsData} />
                     </Stack>
                 </Box>
             </Box>

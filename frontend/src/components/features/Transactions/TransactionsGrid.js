@@ -59,20 +59,19 @@ export default function TransactionsGrid() {
     return (
         <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
 
-            <Grid container spacing={2} columns={12}>
-                <Grid size={{ xs: 12, lg: 11 }}>
+            <Grid container spacing={2} alignItems="center" justifyContent="space-between">
+                <Grid item>
                     <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
                         Transactions
                     </Typography>
-
                 </Grid>
-                <Grid size={{ xs: 12, lg: 1 }}>
+                <Grid item>
                     <Button
                         variant="contained"
                         onClick={handleExport}
                         sx={{ mb: 2 }}
                     >
-                        Export CSV
+                        Export Transactions (.csv)
                     </Button>
                 </Grid>
             </Grid>

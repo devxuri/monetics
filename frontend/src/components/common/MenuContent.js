@@ -26,6 +26,12 @@ const secondaryListItems = [
 export default function MenuContent() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [uploadedStatements, setUploadedStatements] = React.useState([]);
+
+  React.useEffect(() => {
+    const statements = JSON.parse(sessionStorage.getItem('uploadedStatements')) || [];
+    setUploadedStatements(statements);
+  }, []);
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -34,14 +40,19 @@ export default function MenuContent() {
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
       <List dense>
-        {mainListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton onClick={() => handleNavigation(item.path)} selected={location.pathname === item.path}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {mainListItems.map((item, index) => {
+          if (item.text !== 'Upload' && uploadedStatements.length === 0) {
+            return null;
+          }
+          return (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton onClick={() => handleNavigation(item.path)} selected={location.pathname === item.path}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
       <List dense>
         {secondaryListItems.map((item, index) => (

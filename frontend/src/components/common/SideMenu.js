@@ -39,7 +39,7 @@ export default function SideMenu() {
           p: 1.5,
         }}
       >
-        <Typography variant="h6" component="div">
+        <Typography variant="h6" component="div" ml="5%">
           Monetics
         </Typography>
       </Box>

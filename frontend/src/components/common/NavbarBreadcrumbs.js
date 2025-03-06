@@ -34,8 +34,8 @@ export default function NavbarBreadcrumbs() {
       aria-label="breadcrumb"
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
-      <Link to="/">
-        <Typography variant="body1">Upload</Typography>
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <Typography variant="body1" sx={{ color: 'text.primary' }}>Upload</Typography>
       </Link>
       {pathnames.map((value, index) => {
         const to = `/${pathnames.slice(0, index + 1).join('/')}`;
@@ -45,8 +45,8 @@ export default function NavbarBreadcrumbs() {
             {capitalize(value)}
           </Typography>
         ) : (
-          <Link key={to} to={to}>
-            <Typography variant="body1">{capitalize(value)}</Typography>
+          <Link key={to} to={to} style={{ textDecoration: 'none' }}>
+            <Typography variant="body1" sx={{ color: 'inherit' }}>{capitalize(value)}</Typography>
           </Link>
         );
       })}

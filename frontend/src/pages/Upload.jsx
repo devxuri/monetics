@@ -1,18 +1,13 @@
 import * as React from 'react';
-import { Box } from '@mui/material';
-import UploadCard from '../components/features/Upload/UploadCard';
-import CsvUploader from '../components/features/Upload/CsvUploader';
-
-
+import { Box, Button } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
 import AppNavbar from '../components/common/AppNavbar';
 import Header from '../components/common/Header';
-import MainGrid from '../components/features/Analytics/AnalyticsGrid';
 import SideMenu from '../components/common/SideMenu';
 import AppTheme from '../components/shared-theme/AppTheme';
-
+import CsvUploader from '../components/features/Upload/CsvUploader';
 import {
     chartsCustomizations,
     dataGridCustomizations,
@@ -33,7 +28,6 @@ export default function UploadPage(props) {
     };
 
     return (
-
         <AppTheme {...props} themeComponents={xThemeComponents}>
             <CssBaseline enableColorScheme />
             <Box sx={{ display: 'flex' }}>
@@ -59,15 +53,11 @@ export default function UploadPage(props) {
                         }}
                     >
                         <Header />
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                height: '100vh',
-                            }}
-                        >
-                            <CsvUploader onUploadSuccess={handleUploadSuccess} />
+
+                        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mt: 4 }}>
+                            <Box sx={{ width: '100%', maxWidth: '900px' }}>
+                                <CsvUploader onUploadSuccess={handleUploadSuccess} />
+                            </Box>
                         </Box>
                     </Stack>
                 </Box>

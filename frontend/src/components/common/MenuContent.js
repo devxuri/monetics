@@ -6,21 +6,21 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import FileUploadRounded from '@mui/icons-material/FileUploadRounded';
+import SmartToyRoundedIcon from '@mui/icons-material/SmartToyRounded';
 
 const mainListItems = [
-  { text: 'Upload', icon: <HomeRoundedIcon />, path: '/' },
+  { text: 'Upload', icon: <FileUploadRounded />, path: '/' },
   { text: 'Analytics', icon: <AnalyticsRoundedIcon />, path: '/analytics' },
   { text: 'Transactions', icon: <AssignmentRoundedIcon />, path: '/transactions' },
-  { text: 'Chatbot', icon: <PeopleRoundedIcon />, path: '/chatbot' },
+  { text: 'Chatbot', icon: <SmartToyRoundedIcon />, path: '/chatbot' },
 ];
 
 const secondaryListItems = [
-  { text: 'About', icon: <InfoRoundedIcon />, path: '/legacy' }
+  { text: 'About', icon: <InfoRoundedIcon />, path: '/about' }
 ];
 
 export default function MenuContent() {

@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { columns, rows } from '../../../utils/gridData';
+import { generateColumnsAndRows } from '../../../utils/gridData';
 
-export default function CustomizedDataGrid() {
+export default function TransactionsDataGrid() {
+  const uploadedStatements = JSON.parse(sessionStorage.getItem('uploadedStatements')) || [];
+  const { columns, rows } = generateColumnsAndRows(uploadedStatements);
+
   return (
     <DataGrid
       checkboxSelection

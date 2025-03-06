@@ -22,45 +22,14 @@ import { TreeItem2Provider } from '@mui/x-tree-view/TreeItem2Provider';
 import { useTheme } from '@mui/material/styles';
 
 const ITEMS = [
-  {
-    id: '1',
-    label: 'Website',
-    children: [
-      { id: '1.1', label: 'Home', color: 'green' },
-      { id: '1.2', label: 'Pricing', color: 'green' },
-      { id: '1.3', label: 'About us', color: 'green' },
-      {
-        id: '1.4',
-        label: 'Blog',
-        children: [
-          { id: '1.1.1', label: 'Announcements', color: 'blue' },
-          { id: '1.1.2', label: 'April lookahead', color: 'blue' },
-          { id: '1.1.3', label: "What's new", color: 'blue' },
-          { id: '1.1.4', label: 'Meet the team', color: 'blue' },
-        ],
-      },
-    ],
-  },
-  {
-    id: '2',
-    label: 'Store',
-    children: [
-      { id: '2.1', label: 'All products', color: 'green' },
-      {
-        id: '2.2',
-        label: 'Categories',
-        children: [
-          { id: '2.2.1', label: 'Gadgets', color: 'blue' },
-          { id: '2.2.2', label: 'Phones', color: 'blue' },
-          { id: '2.2.3', label: 'Wearables', color: 'blue' },
-        ],
-      },
-      { id: '2.3', label: 'Bestsellers', color: 'green' },
-      { id: '2.4', label: 'Sales', color: 'green' },
-    ],
-  },
-  { id: '4', label: 'Contact', color: 'blue' },
-  { id: '5', label: 'Help', color: 'blue' },
+  { id: '1', label: 'Groceries', color: 'blue', },
+  { id: '2', label: 'Payments', color: 'blue', },
+  { id: '3', label: 'Restaurants', color: 'blue' },
+  { id: '4', label: 'Subscription', color: 'blue' },
+  { id: '5', label: 'Entertainment', color: 'blue' },
+  { id: '6', label: 'Housing & Utilities', color: 'blue' },
+  { id: '7', label: 'Transportation', color: 'blue' },
+  { id: '8', label: 'Miscellaneous', color: 'blue' },
 ];
 
 function DotIcon({ color }) {
@@ -196,7 +165,7 @@ CustomTreeItem.propTypes = {
   label: PropTypes.node,
 };
 
-export default function CustomizedTreeView() {
+export default function CategoriesView() {
   return (
     <Card
       variant="outlined"
@@ -204,7 +173,7 @@ export default function CustomizedTreeView() {
     >
       <CardContent>
         <Typography component="h2" variant="subtitle2">
-          Product tree
+          Categories
         </Typography>
         <RichTreeView
           items={ITEMS}

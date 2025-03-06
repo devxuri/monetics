@@ -13,8 +13,9 @@ public class CategorizationService {
     private static final Map<String, List<String>> CATEGORY_RULES = Map.of(
             "Groceries", List.of("tesco", "fresh", "supermarket", "morrisons"),
             "Entertainment", List.of("cine", "netflix", "spotify", "ice skating"),
-            "Transport", List.of("tfl", "travel", "train"),
-            "Restaurants", List.of("pizza", "domino", "udon", "pret", "subway", "rice and curry")
+            "Transportation", List.of("tfl", "travel", "train"),
+            "Restaurants", List.of("pizza", "domino", "udon", "pret", "subway", "rice and curry"),
+            "Housing & Utilities", List.of()
     );
 
     public List<Transaction> categorizeTransactions(List<Transaction> transactions) {
@@ -48,6 +49,6 @@ public class CategorizationService {
                 .orElse(null);
 
         // RULE 3: Default uncat if none matches
-        return matchedCategory != null ? matchedCategory : "Uncategorized";
+        return matchedCategory != null ? matchedCategory : "Miscellaneous";
     }
 }

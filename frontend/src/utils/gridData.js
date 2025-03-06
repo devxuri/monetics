@@ -74,6 +74,26 @@ export function renderAvatar(params) {
   );
 }
 
+export function generateColumnsAndRows(uploadedStatements) {
+  if (!uploadedStatements || uploadedStatements.length === 0) {
+    return { columns: [], rows: [] };
+  }
+
+  const columns = Object.keys(uploadedStatements[0]).map((key) => ({
+    field: key,
+    headerName: key.charAt(0).toUpperCase() + key.slice(1),
+    flex: 1,
+    minWidth: 100,
+  }));
+
+  const rows = uploadedStatements.map((statement, index) => ({
+    id: index + 1,
+    ...statement,
+  }));
+
+  return { columns, rows };
+}
+
 export const columns = [
   { field: 'pageTitle', headerName: 'Page Title', flex: 1.5, minWidth: 200 },
   {

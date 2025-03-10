@@ -43,9 +43,8 @@ const data = [
 ];
 
 export default function TransactionsGrid() {
-    const uploadedStatements = JSON.parse(sessionStorage.getItem('uploadedStatements')) || [];
-
     const handleExport = () => {
+        const uploadedStatements = JSON.parse(sessionStorage.getItem('uploadedStatements')) || [];
         if (uploadedStatements.length === 0) {
             return;
         }

@@ -60,8 +60,6 @@ public class CsvParserService {
             logger.error("Error parsing CSV file: {}", e.getMessage(), e);
             throw new InvalidFileException("Invalid CSV file format: " + e.getMessage(), e);
         }
-
-        logger.info("Successfully parsed {} transactions", transactions.size());
         return transactions;
     }
 }

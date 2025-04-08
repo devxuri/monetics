@@ -11,41 +11,42 @@ export default function CsvUploader({ onUploadSuccess }) {
     const [file, setFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const chatbotAnswer = 'I can help you analyze your bank statement. You can ask me specific questions about your transactions, like identifying spending patterns, total amounts spent in particular categories, or any other specific information you need. What would you like to know?';
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
 
         if (selectedFile) {
-            Papa.parse(selectedFile, {
+            Papa.parse(selectedFile, { // Parsing the uploaded bank statement into CSV
                 complete: (results) => {
                     console.log('Parsed CSV data:', results.data);
                 },
                 header: true,
             });
 
-            handleUpload(selectedFile);
+            handleStatementUpload(selectedFile);
         }
     };
 
-    const handleUpload = async (fileToUpload) => {
+    const handleStatementUpload = async (fileToUpload) => {
         if (!fileToUpload) {
-            setError('Please select a file');
+            setError('Please select a file'); // Provide feedback to no file selected
             return;
         }
 
         const formData = new FormData();
-        formData.append('file', fileToUpload);
+        formData.append('file', fileToUpload); // Conversion for api backend acceptance
 
         setIsLoading(true);
         setError('');
 
         try {
-            const data = await uploadStatement(formData);
+            const data = await uploadStatement(formData); // API service call for upload
             onUploadSuccess(data);
-            sessionStorage.setItem('uploadedStatements', JSON.stringify(data));
+            sessionStorage.setItem('uploadedStatements', JSON.stringify(data)); // Session storage initialisation
             sessionStorage.setItem('chatbotQuestion', 'What can you do?');
-            sessionStorage.setItem('chatbotAnswer', 'I can help you analyze your bank statement. You can ask me specific questions about your transactions, like identifying spending patterns, total amounts spent in particular categories, or any other specific information you need. What would you like to know?');
+            sessionStorage.setItem('chatbotAnswer', chatbotAnswer);
         } catch (err) {
             setError(err.message);
         } finally {

@@ -29,10 +29,12 @@
 
 <!-- PROJECT LOGO -->
 <br />
+<!--
 <div align="center">
   <a href="https://github.com/devxuri/monetics">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
+-->
 
 <h3 align="center">Monetics</h3>
 
@@ -42,7 +44,7 @@
     <a href="https://github.com/devxuri/monetics"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/dexuri/monetics">View Demo</a>
+    <a href="https://www.youtube.com/watch?v=lcAQr5SzPMo">View Video Demo</a>
     &middot;
     <a href="https://github.com/github_username/repo_name/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
@@ -145,9 +147,9 @@ To get a local copy up and running follow these simple example steps.-->
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+<!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://example.com)_ -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
